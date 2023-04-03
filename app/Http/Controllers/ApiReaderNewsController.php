@@ -9,8 +9,50 @@ use App\Models\News;
 use App\Models\Reader;
 use App\Models\ReaderNews;
 
+/**
+* @OA\Info(
+*             title="Projecto challengeWyleex: Documentación de la API de lectores y de noticias", 
+*             version="1.0",
+*             description="Listado de URI's: Esta documentación provee información necesaria para la utilización correcta de los End-Points"
+* )
+*
+* @OA\Server(url="http://127.0.0.1:8000")
+*/
+
 class ApiReaderNewsController extends Controller
 {
+    /**
+     * Listado de noticias
+     * @OA\Get (
+     *     path="/api/news",
+     *     tags={"Noticias"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="rows",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="title",type="string",example="El clima mejorará a partir de la segunda semana de Mayo"),
+     *                     @OA\Property(property="content",type="string",example="Las fuertes lluvias, y el clima extremo sufridos a inicio de este mes, han ocasionado..."),
+     *                     @OA\Property(property="datetime",type="datetime",example="2023-04-03 07:06:33"),
+     *                     @OA\Property(property="author",type="string",example="Jane Doe"),
+     *                     @OA\Property(property="reader_qty",type="number",example="24")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Not Found",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Not Found"),
+     *          )
+     *      )
+     * )
+     */
     public function index(){
         $news = News::all();
 
@@ -28,6 +70,38 @@ class ApiReaderNewsController extends Controller
         return response()->json($data);
     }
 
+    /**
+     * Mostrar la información de una noticia
+     * @OA\Get (
+     *     path="/api/news/{id}",
+     *     tags={"Noticia"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="number")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="title", type="string", example="El estado como facilitador, no como inversor"),
+     *              @OA\Property(property="content", type="string", example="[...] como mecanismo para rescatar una vez más a la empresa"),
+     *              @OA\Property(property="datetime", type="string", example="2023-02-23T00:09:16.000000Z"),
+     *              @OA\Property(property="author", type="string", example="John Doe"),
+     *              @OA\Property(property="reader_qty", type="string", example="22"),
+     *              @OA\Property(property="readers", type="object", example="[{'name': 'John', 'last_name': 'Doe'}]")
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Not Found",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Not Found"),
+     *          )
+     *      )
+     * )
+     */
     public function show($id){
         $news_selected = News::find($id);
         $code = 200;
@@ -60,6 +134,41 @@ class ApiReaderNewsController extends Controller
         return response()->json($data, $code);
     }
 
+        /**
+     * Listado de lectores de una noticia
+     * @OA\Get (
+     *     path="/api/news/{id}/readers",
+     *     tags={"Lectores"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="number")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="rows",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="name", type="string",example="John"),
+     *                     @OA\Property(property="last_name", type="string",example="Doe"),
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not Found",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Not Found"),
+     *          )
+     *      )
+     * )
+     */
     public function get_readers_of_a_news($id){
         $news_selected = News::find($id);
         $code = 200;
@@ -88,32 +197,36 @@ class ApiReaderNewsController extends Controller
         return response()->json($data, $code);
     }
 
-    public function get_news_readed_for_a_reader($id){ //using a descriptive name
-        $reader = Reader::find($id);
-        
-        if($reader){
-            $code = 200;
-            $data = $reader->news()->toArray();
-
-            // Used Array Map to filter some data of the news
-            $data = array_map(function($data){
-                return [
-                    'title' => $data['title'],
-                    'content' => $data['content'],
-                    'datetime' => $data['datetime'],
-                    'author' => $data['author'],
-                ];
-            }, $data);
-        } else {
-            $code = 404;
-            $data = [
-                'error' => 'Not Found'
-            ];
-        }
-
-        return response()->json($data, $code);
-    }
-
+        /**
+     * Mostrar la información de un lector
+     * @OA\Get (
+     *     path="/api/reader/{id}",
+     *     tags={"Lector"},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="name", type="string", example="John"),
+     *              @OA\Property(property="last_name", type="string", example="Doe"),
+     *              @OA\Property(property="email", type="string", example="john@mail.com"),
+     *              @OA\Property(property="registered", type="datetime", example="2023-02-23T00:09:16.000000Z"),
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Not Found",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Not Found"),
+     *          )
+     *      )
+     * )
+     */
     public function reader($id){
         $reader = Reader::find($id);
         $data = [];
@@ -129,6 +242,69 @@ class ApiReaderNewsController extends Controller
                     'last_name' => $data['last_name'],
                     'email' => $data['user']['email'],
                     'registered' => $data['created_at']
+                ];
+            }, $data);
+        } else {
+            $code = 404;
+            $data = [
+                'error' => 'Not Found'
+            ];
+        }
+
+        return response()->json($data, $code);
+    }
+
+    /**
+     * Listado de noticias leidas por un lector
+     * @OA\Get (
+     *     path="/api/reader/{id}/news",
+     *     tags={"Noticias Leidas"},
+     *      @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="number")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="rows",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="title",type="string",example="El clima mejorará a partir de la segunda semana de Mayo"),
+     *                     @OA\Property(property="content",type="string",example="Las fuertes lluvias, y el clima extremo sufridos a inicio de este mes, han ocasionado..."),
+     *                     @OA\Property(property="datetime",type="datetime",example="2023-04-03 07:06:33"),
+     *                     @OA\Property(property="author",type="string",example="Jane Doe"),
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *          response=404,
+     *          description="Not Found",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Not Found"),
+     *          )
+     *      )
+     * )
+     */
+    public function get_news_readed_for_a_reader($id){ //using a descriptive name
+        $reader = Reader::find($id);
+        
+        if($reader){
+            $code = 200;
+            $data = $reader->news()->toArray();
+
+            // Used Array Map to filter some data of the news
+            $data = array_map(function($data){
+                return [
+                    'title' => $data['title'],
+                    'content' => $data['content'],
+                    'datetime' => $data['datetime'],
+                    'author' => $data['author'],
                 ];
             }, $data);
         } else {

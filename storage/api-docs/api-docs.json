@@ -1,0 +1,361 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Projecto challengeWyleex: Documentación de la API de lectores y de noticias",
+        "description": "Listado de URI's: Esta documentación provee información necesaria para la utilización correcta de los End-Points",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000"
+        }
+    ],
+    "paths": {
+        "/api/news": {
+            "get": {
+                "tags": [
+                    "Noticias"
+                ],
+                "summary": "Listado de noticias",
+                "operationId": "7673570917f89816981187d441b7ba3a",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "El clima mejorará a partir de la segunda semana de Mayo"
+                                                    },
+                                                    "content": {
+                                                        "type": "string",
+                                                        "example": "Las fuertes lluvias, y el clima extremo sufridos a inicio de este mes, han ocasionado..."
+                                                    },
+                                                    "datetime": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2023-04-03 07:06:33"
+                                                    },
+                                                    "author": {
+                                                        "type": "string",
+                                                        "example": "Jane Doe"
+                                                    },
+                                                    "reader_qty": {
+                                                        "type": "number",
+                                                        "example": "24"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/news/{id}": {
+            "get": {
+                "tags": [
+                    "Noticia"
+                ],
+                "summary": "Mostrar la información de una noticia",
+                "operationId": "44c86eea2ae753f36997082bfa87b4a4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "example": "El estado como facilitador, no como inversor"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "[...] como mecanismo para rescatar una vez más a la empresa"
+                                        },
+                                        "datetime": {
+                                            "type": "string",
+                                            "example": "2023-02-23T00:09:16.000000Z"
+                                        },
+                                        "author": {
+                                            "type": "string",
+                                            "example": "John Doe"
+                                        },
+                                        "reader_qty": {
+                                            "type": "string",
+                                            "example": "22"
+                                        },
+                                        "readers": {
+                                            "type": "object",
+                                            "example": "[{'name': 'John', 'last_name': 'Doe'}]"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/news/{id}/readers": {
+            "get": {
+                "tags": [
+                    "Lectores"
+                ],
+                "summary": "Listado de lectores de una noticia",
+                "operationId": "2442dc614d2ddb3254876e5efe045946",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "last_name": {
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reader/{id}": {
+            "get": {
+                "tags": [
+                    "Lector"
+                ],
+                "summary": "Mostrar la información de un lector",
+                "operationId": "458119238be2bbaa679568742abf1a76",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "example": "John"
+                                        },
+                                        "last_name": {
+                                            "type": "string",
+                                            "example": "Doe"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "john@mail.com"
+                                        },
+                                        "registered": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2023-02-23T00:09:16.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reader/{id}/news": {
+            "get": {
+                "tags": [
+                    "Noticias Leidas"
+                ],
+                "summary": "Listado de noticias leidas por un lector",
+                "operationId": "0dd31f985ef6de3094bac85779cc64c2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "rows": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "El clima mejorará a partir de la segunda semana de Mayo"
+                                                    },
+                                                    "content": {
+                                                        "type": "string",
+                                                        "example": "Las fuertes lluvias, y el clima extremo sufridos a inicio de este mes, han ocasionado..."
+                                                    },
+                                                    "datetime": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2023-04-03 07:06:33"
+                                                    },
+                                                    "author": {
+                                                        "type": "string",
+                                                        "example": "Jane Doe"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Not Found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
