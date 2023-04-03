@@ -1,0 +1,21 @@
+.bg-gray-100{
+    background-color: #00000010;
+}
+
+.cursor-pointer{
+    cursor: pointer !important;
+}
+
+.responsive-tables{
+    max-width: 100% !important; 
+    overflow: auto !important;
+}
+
+.width-fit-content{
+    width: fit-content !important;
+    padding: 0 0.4rem;
+}
+
+.highlight-element:hover{
+    background-color: #0d6efd15;
+}
