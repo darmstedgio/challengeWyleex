@@ -480,11 +480,11 @@
                                 "properties": {
                                     "email": {
                                         "type": "string",
-                                        "example": "admin@mail.com"
+                                        "example": "administrator@mail.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "admin123"
+                                        "example": "pass123"
                                     }
                                 },
                                 "type": "object"
