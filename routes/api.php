@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth:api']], function () {
     // JWT Auth
     Route::post('login', [AuthController::class, 'login'])->withoutMiddleware(['auth:api']);
+    Route::get('me', [AuthController::class, 'me']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::get('me', [AuthController::class, 'me']);
 
 
     // // News data

@@ -3,9 +3,12 @@
     "info": {
         "title": "Projecto challengeWyleex: Documentación de la API de lectores y de noticias",
         "description": "Listado de URI's: Esta documentación provee información necesaria para la utilización correcta de los End-Points",
-        "version": "1.0"
+        "version": "1.0.0"
     },
     "servers": [
+        {
+            "url": "https://challengewyleex.darmsportfolio.xyz"
+        },
         {
             "url": "http://127.0.0.1:8000"
         }
@@ -14,7 +17,7 @@
         "/api/news": {
             "get": {
                 "tags": [
-                    "Noticias"
+                    "Obtener noticias"
                 ],
                 "summary": "Listado de noticias",
                 "operationId": "7673570917f89816981187d441b7ba3a",
@@ -60,6 +63,22 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -76,15 +95,20 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/news/{id}": {
             "get": {
                 "tags": [
-                    "Noticia"
+                    "Obtener una noticia"
                 ],
-                "summary": "Mostrar la información de una noticia",
+                "summary": "Información de una noticia",
                 "operationId": "44c86eea2ae753f36997082bfa87b4a4",
                 "parameters": [
                     {
@@ -133,6 +157,22 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -149,13 +189,18 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/news/{id}/readers": {
             "get": {
                 "tags": [
-                    "Lectores"
+                    "Obtener lectores de una noticia"
                 ],
                 "summary": "Listado de lectores de una noticia",
                 "operationId": "2442dc614d2ddb3254876e5efe045946",
@@ -198,6 +243,22 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -214,15 +275,20 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/reader/{id}": {
             "get": {
                 "tags": [
-                    "Lector"
+                    "Obtener un lector"
                 ],
-                "summary": "Mostrar la información de un lector",
+                "summary": "Información de un lector",
                 "operationId": "458119238be2bbaa679568742abf1a76",
                 "parameters": [
                     {
@@ -264,6 +330,22 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -280,13 +362,18 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/reader/{id}/news": {
             "get": {
                 "tags": [
-                    "Noticias Leidas"
+                    "Obtener noticias leídas por un lector"
                 ],
                 "summary": "Listado de noticias leidas por un lector",
                 "operationId": "0dd31f985ef6de3094bac85779cc64c2",
@@ -338,6 +425,22 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -354,7 +457,269 @@
                             }
                         }
                     }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth Login: Obtener token"
+                ],
+                "summary": "Login",
+                "description": "Login",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "admin@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "admin123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LhAuMC4xOjgwMDAvYXBpL3JlZnJlc2giLCJpYXQiOjE2ODA2MzUyNTMsImV4cCI6MTY4MTI0MDA5MCwibmJmIjoxNjgwNjM1MjkwLCJqdGkiOiJIR1o5M1JFbU1wc2hJTUt3Iiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzll2zAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.B8ogV3E5tMPfII1-vTvzqpXO_pt73II0koXkb63jEVQ"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "number",
+                                            "example": "604800"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
                 }
+            }
+        },
+        "/api/me": {
+            "get": {
+                "tags": [
+                    "Auth Me: Obtener información del usuario logueado"
+                ],
+                "summary": "Información usuario logueado",
+                "description": "Retorna los datos del usuario autentificado",
+                "operationId": "9d9bc556f927575aa492a88c28fe5908",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": "1"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "John Doe"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "john@mail.com"
+                                        },
+                                        "email_verified_at": {
+                                            "type": "string|null",
+                                            "example": "null"
+                                        },
+                                        "role": {
+                                            "type": "string",
+                                            "example": "ADMIN"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "2023-04-03T09:23:30.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "example": "2023-04-03T09:23:30.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth Logout: Cerrar Sesión"
+                ],
+                "summary": "Logout",
+                "description": "Logout",
+                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully logged out"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/refresh": {
+            "post": {
+                "tags": [
+                    "Auth Refresh: Actualizar Token"
+                ],
+                "summary": "Refresh",
+                "description": "Refresh",
+                "operationId": "2c27d311a2876560fcb5a754b556cdc5",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LhAuMC4xOjgwMDAvYXBpL3JlZnJlc2giLCJpYXQiOjE2ODA2MzUyNTMsImV4cCI6MTY4MTI0MDA5MCwibmJmIjoxNjgwNjM1MjkwLCJqdGkiOiJIR1o5M1JFbU1wc2hJTUt3Iiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzll2zAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.B8ogV3E5tMPfII1-vTvzqpXO_pt73II0koXkb63jEVQ"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "number",
+                                            "example": "604800"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Error: Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     }

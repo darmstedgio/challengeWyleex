@@ -9,15 +9,6 @@ use App\Models\News;
 use App\Models\Reader;
 use App\Models\ReaderNews;
 
-/**
-* @OA\Info(
-*             title="Projecto challengeWyleex: Documentación de la API de lectores y de noticias", 
-*             version="1.0",
-*             description="Listado de URI's: Esta documentación provee información necesaria para la utilización correcta de los End-Points"
-* )
-*
-* @OA\Server(url="http://127.0.0.1:8000")
-*/
 
 class ApiReaderNewsController extends Controller
 {
@@ -25,7 +16,7 @@ class ApiReaderNewsController extends Controller
      * Listado de noticias
      * @OA\Get (
      *     path="/api/news",
-     *     tags={"Noticias"},
+     *     tags={"Obtener noticias"},
      *     @OA\Response(
      *         response=200,
      *         description="OK",
@@ -45,12 +36,20 @@ class ApiReaderNewsController extends Controller
      *         )
      *     ),
      *      @OA\Response(
+     *                  response=401, 
+     *                  description="Error: Unauthorized",
+     *                  @OA\JsonContent(
+     *                     @OA\Property(property="message", type="string", example="Unauthenticated."),
+     *                  )
+     *      ),
+     *      @OA\Response(
      *          response=404,
      *          description="Not Found",
      *          @OA\JsonContent(
      *              @OA\Property(property="error", type="string", example="Not Found"),
      *          )
-     *      )
+     *      ),
+     *      security={{"bearerAuth": {} }}
      * )
      */
     public function index(){
@@ -71,10 +70,10 @@ class ApiReaderNewsController extends Controller
     }
 
     /**
-     * Mostrar la información de una noticia
+     * Información de una noticia
      * @OA\Get (
      *     path="/api/news/{id}",
-     *     tags={"Noticia"},
+     *     tags={"Obtener una noticia"},
      *     @OA\Parameter(
      *         in="path",
      *         name="id",
@@ -94,12 +93,20 @@ class ApiReaderNewsController extends Controller
      *         )
      *     ),
      *      @OA\Response(
+     *                  response=401, 
+     *                  description="Error: Unauthorized",
+     *                  @OA\JsonContent(
+     *                     @OA\Property(property="message", type="string", example="Unauthenticated."),
+     *                  )
+     *      ),
+     *      @OA\Response(
      *          response=404,
      *          description="Not Found",
      *          @OA\JsonContent(
      *              @OA\Property(property="error", type="string", example="Not Found"),
      *          )
-     *      )
+     *      ),
+     *      security={{"bearerAuth": {} }}
      * )
      */
     public function show($id){
@@ -138,7 +145,7 @@ class ApiReaderNewsController extends Controller
      * Listado de lectores de una noticia
      * @OA\Get (
      *     path="/api/news/{id}/readers",
-     *     tags={"Lectores"},
+     *     tags={"Obtener lectores de una noticia"},
      *     @OA\Parameter(
      *         in="path",
      *         name="id",
@@ -160,13 +167,21 @@ class ApiReaderNewsController extends Controller
      *             )
      *         )
      *     ),
+     *      @OA\Response(
+     *                  response=401, 
+     *                  description="Error: Unauthorized",
+     *                  @OA\JsonContent(
+     *                     @OA\Property(property="message", type="string", example="Unauthenticated."),
+     *                  )
+     *      ),
      *     @OA\Response(
      *          response=404,
      *          description="Not Found",
      *          @OA\JsonContent(
      *              @OA\Property(property="error", type="string", example="Not Found"),
      *          )
-     *      )
+     *      ),
+     *      security={{"bearerAuth": {} }}
      * )
      */
     public function get_readers_of_a_news($id){
@@ -198,10 +213,10 @@ class ApiReaderNewsController extends Controller
     }
 
         /**
-     * Mostrar la información de un lector
+     * Información de un lector
      * @OA\Get (
      *     path="/api/reader/{id}",
-     *     tags={"Lector"},
+     *     tags={"Obtener un lector"},
      *     @OA\Parameter(
      *         in="path",
      *         name="id",
@@ -219,12 +234,20 @@ class ApiReaderNewsController extends Controller
      *         )
      *     ),
      *      @OA\Response(
+     *                  response=401, 
+     *                  description="Error: Unauthorized",
+     *                  @OA\JsonContent(
+     *                     @OA\Property(property="message", type="string", example="Unauthenticated."),
+     *                  )
+     *      ),
+     *      @OA\Response(
      *          response=404,
      *          description="Not Found",
      *          @OA\JsonContent(
      *              @OA\Property(property="error", type="string", example="Not Found"),
      *          )
-     *      )
+     *      ),
+     *      security={{"bearerAuth": {} }}
      * )
      */
     public function reader($id){
@@ -258,7 +281,7 @@ class ApiReaderNewsController extends Controller
      * Listado de noticias leidas por un lector
      * @OA\Get (
      *     path="/api/reader/{id}/news",
-     *     tags={"Noticias Leidas"},
+     *     tags={"Obtener noticias leídas por un lector"},
      *      @OA\Parameter(
      *         in="path",
      *         name="id",
@@ -282,13 +305,21 @@ class ApiReaderNewsController extends Controller
      *             )
      *         )
      *     ),
+     *      @OA\Response(
+     *                  response=401, 
+     *                  description="Error: Unauthorized",
+     *                  @OA\JsonContent(
+     *                     @OA\Property(property="message", type="string", example="Unauthenticated."),
+     *                  )
+     *      ),
      *     @OA\Response(
      *          response=404,
      *          description="Not Found",
      *          @OA\JsonContent(
      *              @OA\Property(property="error", type="string", example="Not Found"),
      *          )
-     *      )
+     *      ),
+     *      security={{"bearerAuth": {} }}
      * )
      */
     public function get_news_readed_for_a_reader($id){ //using a descriptive name
