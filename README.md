@@ -2,7 +2,7 @@
 
 ## Sobre el proyecto
 
-Puede visualizar la aplicación en producción [Aquí](https://challengewyleex.darmsportfolio.xyz)
+Enlace del proyecto en producción: [desafioWyleex](https://challengewyleex.darmsportfolio.xyz)
 
 ## Sobre el proyecto
 
