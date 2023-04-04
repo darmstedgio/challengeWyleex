@@ -1,9 +1,9 @@
 # Documentación
 ## Sobre el proyecto
 
-Ester repositorio contiene un proyecto Laravel para ser utilizado en carácter de prueba técnica.
+Este repositorio contiene un proyecto Laravel para ser utilizado en carácter de prueba técnica.
 En términos generales, la aplicación relaciona lectores y con noticias.
-Cada entidad (lectores y administradores) tiene la posibilidad de identificarse en la aplicación web y dependiendo de su rol dentro de la misma podrá: o solo ver noticias, o crearlas, modificarlas, gestionar redactores, visualizar estadisticas.
+Cada entidad (lectores y administradores) tiene la posibilidad de identificarse en la aplicación web y dependiendo de su rol dentro de la misma podrá: o solo ver noticias, o crearlas, modificarlas, gestionar redactores, visualizar estadísticas.
 También, los usuarios administradores tendrán acceso a los EndPoints.
 Éstos EndPoints están securizados mediante JWT y proporcionan información útil sobre lectores, noticias.
 Puede revisar la documentación de los EndPoints en: 
