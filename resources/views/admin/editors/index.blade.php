@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="container mb-5">
-        <h1>Lista de Editores</h1>
+        <h1>Lista de Redactores</h1>
         <div class="row d-flex flex-row flex-row-reverse mr-3">
             <a class="btn btn-primary text-end width-fit-content me-3" href="{{ route('editors.create') }}">
                 <i class="fas fa-plus"> </i>
-                Crear Editor
+                Crear Redactor
             </a>
         </div>
     </div>

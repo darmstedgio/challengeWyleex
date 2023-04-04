@@ -78,7 +78,7 @@ class EditorController extends Controller
         // Send a email with the credentials to the editor
         $user->notify(new EditorCredential($editor_data));
 
-        toast('¡Editor creado con éxito!','success');
+        toast('¡Redactor creado con éxito!','success');
         return redirect()->route('editors.index');
     }
 
@@ -133,7 +133,7 @@ class EditorController extends Controller
                 $data
             );
 
-            toast('¡Editor actualizado con éxito!','success');
+            toast('¡Redactor actualizado con éxito!','success');
         } else {
             toast('No cuenta con los permisos necesarios para eliminar redactores','info');
         }

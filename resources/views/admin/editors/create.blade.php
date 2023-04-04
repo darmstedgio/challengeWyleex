@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container mb-5">
-        <h1>Nuevo Editor</h1>
+        <h1>Nuevo Redactor</h1>
         <div class="row d-flex flex-row flex-row-reverse mr-3">
             <a href="{{ route('editors.index') }}" class="btn btn-outline-secondary width-fit-content me-3">
                 <i class="fas fa-arrow-left pr-1"></i>
