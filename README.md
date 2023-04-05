@@ -7,10 +7,10 @@ Enlace del proyecto en producción: [desafioWyleex](https://challengewyleex.darm
 ## Sobre el proyecto
 
 Este repositorio contiene un proyecto Laravel para ser utilizado en carácter de prueba técnica.
-En términos generales, la aplicación relaciona lectores y con noticias.
-Cada entidad (lectores y administradores) tiene la posibilidad de identificarse en la aplicación web y dependiendo de su rol dentro de la misma podrá: o solo ver noticias, o crearlas, modificarlas, gestionar redactores, visualizar estadísticas.
-También, los usuarios administradores tendrán acceso a los EndPoints.
-Éstos EndPoints están securizados mediante JWT y proporcionan información útil sobre lectores, noticias.
+En términos generales, la aplicación relaciona lectores con noticias.
+Cada usuario (lectores y administradores) tiene la posibilidad de identificarse en la aplicación web y dependiendo de su rol dentro de la misma podrá: o solo ver noticias, o podrá crearlas y/o modificarlas, gestionar redactores y visualizar estadísticas.
+También, los usuarios administradores podrán tener acceso a los EndPoints.
+Éstos EndPoints están securizados mediante JWT y proporcionan información útil sobre los lectores, las noticias y todos los métodos necesarios para la autentificación.
 Puede revisar la documentación de los EndPoints en: 
 [Documentación EndPoints](https://challengewyleex.darmsportfolio.xyz/api/documentation)
 
