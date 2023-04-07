@@ -25,23 +25,37 @@
                     @forelse ($news as $item)
                     <a class="text-decoration-none text-dark " href="{{ route('front-news.show', ['id' => $item->id, 'title' => formate_title_url($item->title)]) }}">
                         <div class="card my-1 w-100 cursor-pointer mb-3 highlight-element">
-                            <div class="card-body py-2">
-                                <h5 class="card-title">{{ $item->title }}</h5>
-                                <p class="card-text mb-1">
-                                    {{ substr($item->content, 0, 100) }}...
-                                </p>
-                                <div class="row text-muted ">
-                                    <div class="col-6">
-                                        {{ \Carbon\Carbon::parse($item->datetime)->format('d/m/Y') }}
-                                        ( {{ \Carbon\Carbon::parse($item->datetime)->diffForHumans() }} )
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <i>
-                                            Redactado por 
-                                            <b>{{ $item->author }}</b>
-                                        </i>
+                            <div class="card-body py-2 row">
+                                <div class="col-md-3">
+                                    <div class="my-4 " id="container_image_preview">
+                                        <div class="d-flex flex-row justify-content-center">
+                                            @if ($item->image_path)
+                                                @if ($item->image_path != null)
+                                                    <img id="news_image_saved" class="img-fluid" src="{{ route('get.image', ['filename' => $item->image_path, 'disk' => 'news']) }}" alt="{{ $item->image_path }}">
+                                                @endif
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-md-9">
+                                    <h5 class="card-title">{{ $item->title }}</h5>
+                                    <p class="card-text mb-1">
+                                        {{ substr($item->content, 0, 100) }}...
+                                    </p>
+                                    <div class="row text-muted ">
+                                        <div class="col-6">
+                                            {{ \Carbon\Carbon::parse($item->datetime)->format('d/m/Y') }}
+                                            ( {{ \Carbon\Carbon::parse($item->datetime)->diffForHumans() }} )
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <i>
+                                                Redactado por 
+                                                <b>{{ $item->author }}</b>
+                                            </i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </a>

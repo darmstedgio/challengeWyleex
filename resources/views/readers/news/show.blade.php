@@ -29,6 +29,16 @@
                     </i>
                 </div>
             </div>
+            {{-- Image --}}
+            <div class="my-4 " id="container_image_preview">
+                <div class="d-flex flex-row justify-content-center">
+                    @if ($news_selected->image_path)
+                        @if ($news_selected->image_path != null)
+                            <img id="news_image_saved" class="img-fluid" src="{{ route('get.image', ['filename' => $news_selected->image_path, 'disk' => 'news']) }}" alt="{{ substr($news_selected->image_path, 10) }}">
+                        @endif
+                    @endif
+                </div>
+            </div>
             <p>
                 {{-- Break line --}}
                 <?php foreach (explode("\n", $news_selected->content) as $line) { ?>

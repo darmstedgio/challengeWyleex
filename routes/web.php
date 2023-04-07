@@ -4,6 +4,7 @@ use App\Http\Controllers\EditorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\FrontNewsController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ReaderController;
 use Illuminate\Support\Facades\Auth;
@@ -21,13 +22,14 @@ Route::get('/news', [FrontNewsController::class, 'index'])->name('front-news.ind
 Route::get('/news/{id}/{title?}', [FrontNewsController::class, 'show'])->name('front-news.show');
 
 // Admin routes
-
 Route::resource('admin/news', NewsController::class)->middleware('admin');
 Route::resource('admin/editors', EditorController::class)->middleware('admin');
 Route::resource('admin/readers', ReaderController::class)->middleware('admin');
 
 
+// Images
+Route::get('/image/{filename}/{disk}', [ImageController::class, 'index'])->name('get.image');
+
 Route::get('/php-info', function() {
-   
     return phpinfo();
 });
