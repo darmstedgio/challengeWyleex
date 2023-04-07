@@ -7,6 +7,8 @@ use App\Models\ReaderNews;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class NewsController extends Controller
@@ -54,12 +56,21 @@ class NewsController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'min:10', 'max:255'],
             'content' => ['required', 'string'],
+            'image_path' => ['nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ]);
+
+        // Save Image
+        $image_path_name = null;
+        if($data['image_path'] ?? false){
+            $image_path_name = time().$request->image_path->getClientOriginalName();
+            Storage::disk('news')->put($image_path_name, File::get($request->image_path));
+        }
 
         $data = array_merge($data, [
             'author' => Auth::user()->name, 
             'datetime' => Carbon::now(),
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'image_path' => $image_path_name,
         ]);
 
         News::create($data);
@@ -104,10 +115,35 @@ class NewsController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'min:10', 'max:255'],
             'content' => ['required', 'string'],
+            'image_path' => ['nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ]);
 
+        // Delete old image
+        $entity = News::find($id);
+        if($entity->image_path){
+            if(Storage::disk('news')->exists($entity->image_path)){
+                Storage::disk('news')->delete($entity->image_path);
+            }
+        }
+
+        // Save Image (it could be improved)
+        $image_path_name = null;
+        if($data['image_path'] ?? false){
+            $image_path_name = time().$request->image_path->getClientOriginalName();
+            Storage::disk('news')->put($image_path_name, File::get($request->image_path));
+        }
+
         $data = array_merge($data, [
-            'datetime' => Carbon::now()
+            'datetime' => Carbon::now(),
+            'image_path' => $image_path_name,
+        ]);
+
+
+        $data = array_merge($data, [
+            'author' => Auth::user()->name, 
+            'datetime' => Carbon::now(),
+            'user_id' => Auth::user()->id,
+            'image_path' => $image_path_name,
         ]);
 
         News::updateOrCreate(

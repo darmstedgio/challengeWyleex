@@ -45,6 +45,13 @@ class AuthController extends Controller
      *              @OA\Property(property="expires_in", type="number", example="604800"),
      *          )
      *     ),
+     *      @OA\Response(
+     *         response=401,
+     *         description="Error: Unauthorized",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="error", type="string", example="Unauthorized"),
+     *          )
+     *     ),
      *     @OA\Response(response=400, description="Bad request"),
      * )
     */
@@ -179,11 +186,22 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
-        ]);
+        $data = [];
+        $code = 200;
+        // Just if is ADMIN...
+        if(auth('api')->user()->role == 'ADMIN'){
+            $data = [
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth('api')->factory()->getTTL() * 60
+            ];
+        } else {
+            $code = 401;
+            $data = ['error' => 'Unauthorized'];
+        }
+        return response()->json($data, $code);
+        
     }
 
 }
+
