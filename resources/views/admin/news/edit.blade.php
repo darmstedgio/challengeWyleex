@@ -65,7 +65,6 @@
                             </span>
                         @enderror
                     </div>
-                    
                     <div class="col-md-1 mt-1 col-sm-12" id="container_image_preview">
                         <div class="d-flex flex-row justify-content-center">
                             @if ($news->image_path)
@@ -112,10 +111,6 @@
 
         // Escuchar cuando cambie
         $seleccionArchivos.addEventListener("change", () => {
-
-            // Resize container image_path
-            container_image_path.classList.remove("col-md-6");
-            container_image_path.classList.add("col-md-5");
 
             // Hide image replaced
             news_image_saved.classList.add('d-none');
