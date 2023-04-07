@@ -24,7 +24,7 @@
     
     <div class="container">
         <div class="card card-body">
-            <form method="POST" action="{{ route('news.update', ['news' => $news->id]) }}">
+            <form method="POST" action="{{ route('news.update', ['news' => $news->id]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -55,6 +55,30 @@
                     </div>
                 </div>
 
+                <div class="form-group row mb-3">
+                    <label for="image_path" class="col-md-4 col-form-label text-md-right">Imagen</label>
+                    <div id="container_image_path" class="col-md-6">
+                        <input id="image_path" type="file" class="form-control @error('image_path') is-invalid @enderror" name="image_path" value="{{ old('image_path') }}">
+                        @error('image_path')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    
+                    <div class="col-md-1 mt-1 col-sm-12" id="container_image_preview">
+                        <div class="d-flex flex-row justify-content-center">
+                            @if ($news->image_path)
+                                @if ($news->image_path != null)
+                                    <img id="news_image_saved" class="img-fluid" src="{{ route('get.image', ['filename' => $news->image_path, 'disk' => 'news']) }}">
+                                @endif
+                                <img id="image_path_preview" class="img-fluid rounded">
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="form-group row mb-3 mb-0">
                     
                     @if(request()->comes_from)
@@ -78,5 +102,37 @@
 @endsection
 
 @section('scripts')
-    
+    <script>
+        // Obtener referencia al input y a la imagen
+
+        const $seleccionArchivos = document.querySelector("#image_path"),
+        $image_path_preview = document.querySelector("#image_path_preview");
+        container_image_path = document.querySelector("#container_image_path");
+        news_image_saved = document.querySelector("#news_image_saved");
+
+        // Escuchar cuando cambie
+        $seleccionArchivos.addEventListener("change", () => {
+
+            // Resize container image_path
+            container_image_path.classList.remove("col-md-6");
+            container_image_path.classList.add("col-md-5");
+
+            // Hide image replaced
+            news_image_saved.classList.add('d-none');
+
+            // Los archivos seleccionados, pueden ser muchos o uno
+            const archivos = $seleccionArchivos.files;
+            // Si no hay archivos salimos de la función y quitamos la imagen
+            if (!archivos || !archivos.length) {
+                $image_path_preview.src = "";
+                return;
+            }
+            // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+            const primerArchivo = archivos[0];
+            // Lo convertimos a un objeto de tipo objectURL
+            const objectURL = URL.createObjectURL(primerArchivo);
+            // Y a la fuente de la imagen le ponemos el objectURL
+            $image_path_preview.src = objectURL;
+        });
+    </script>
 @endsection
