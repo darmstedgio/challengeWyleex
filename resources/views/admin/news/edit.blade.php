@@ -70,7 +70,7 @@
                         <div class="d-flex flex-row justify-content-center">
                             @if ($news->image_path)
                                 @if ($news->image_path != null)
-                                    <img id="news_image_saved" class="img-fluid" src="{{ route('get.image', ['filename' => $news->image_path, 'disk' => 'news']) }}">
+                                    <img id="news_image_saved" class="img-fluid rounded" src="{{ route('get.image', ['filename' => $news->image_path, 'disk' => 'news']) }}">
                                 @endif
                                 <img id="image_path_preview" class="img-fluid rounded">
                             @endif

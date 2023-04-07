@@ -118,17 +118,19 @@ class NewsController extends Controller
             'image_path' => ['nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ]);
 
-        // Delete old image
         $entity = News::find($id);
-        if($entity->image_path){
-            if(Storage::disk('news')->exists($entity->image_path)){
-                Storage::disk('news')->delete($entity->image_path);
-            }
-        }
 
         // Save Image (it could be improved)
-        $image_path_name = null;
-        if($data['image_path'] ?? false){
+        $image_path_name = $entity->image_path;
+        if($request->image_path){
+            // Delete old image
+            if($entity->image_path){
+                if(Storage::disk('news')->exists($entity->image_path)){
+                    Storage::disk('news')->delete($entity->image_path);
+                }
+            }
+
+            // Add new file
             $image_path_name = time().$request->image_path->getClientOriginalName();
             Storage::disk('news')->put($image_path_name, File::get($request->image_path));
         }
